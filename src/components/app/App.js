@@ -4,6 +4,8 @@ import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
 import ComicsList from "../comicsList/ComicsList";
 import ErrorBoundary from "../errorBoundary/errorBoundary";
+import SingleComic from "../singleComic/SingleComic";
+
 
 import decoration from '../../resources/img/vision.png';
 import { useState } from "react";
@@ -16,9 +18,14 @@ import {
 const App = () => {
 
     const [selectedChar, setSelectedChar] = useState(null);
+    const [selectedComic, setSelectedComic] = useState(null);
 
     const onCharSelected = (id) => {
         setSelectedChar(id);
+    }
+
+    const onComicSelected = (id) => {
+        setSelectedComic(id);
     }
 
     return (
@@ -37,7 +44,8 @@ const App = () => {
                     </div>
                     <img className="bg-decoration" src={decoration} alt="vision" />
                 </main>
-                <ComicsList />
+                {/* <ComicsList onComicSelected={onComicSelected} />
+                <SingleComic comicId={selectedComic} /> */}
             </div>
         </Router>
     )
