@@ -1,30 +1,31 @@
-import './singleComic.scss';
+import './SingleComicPage.scss';
 
 import { useState, useEffect } from 'react';
 
-import useMarvelService from '../../services/MarvelService';
-import ErrorMessage from '../errorMessage/ErrorMessage';
-import Spinner from '../spinner/Spinner';
-import Skeleton from '../skeleton/Skeleton';
+import { useParams, Link } from 'react-router-dom';
 
-const SingleComic = (props) => {
+import useMarvelService from '../services/MarvelService';
+import ErrorMessage from '../components/errorMessage/ErrorMessage';
+import Spinner from '../components/spinner/Spinner';
 
-    const { error, loading, getComics } = useMarvelService();
+const SingleComic = () => {
+
+    const { error, loading, clearError, getComics } = useMarvelService();
 
     const [singleComic, setSingleComic] = useState(null);
 
+    const { comicId } = useParams();
+
     useEffect(() => {
-        updateComicInfo(props.comicId)
-    }, [props.comicId]);
+        updateComicInfo(comicId)
+    }, [comicId]);
 
     const onComicInfoLoaded = (comic) => {
         setSingleComic(comic);
     }
 
     const updateComicInfo = (id) => {
-        if (!id) {
-            return;
-        }
+        clearError();
         getComics(id)
             .then(onComicInfoLoaded)
     }
@@ -32,14 +33,12 @@ const SingleComic = (props) => {
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
     const content = !(loading || error || !singleComic) ? <View comic={singleComic} /> : null;
-    const skeleton = singleComic || loading || error ? null : <Skeleton />;
 
     return (
         <>
             {errorMessage}
             {spinner}
             {content}
-            {skeleton}
         </>
     )
 }
@@ -60,7 +59,7 @@ const View = ({ comic }) => {
                 <p className="single-comic__descr">Language: {language}</p>
                 <div className="single-comic__price">{price}</div>
             </div>
-            <a href="#" className="single-comic__back">Back to all</a>
+            <Link to='/comics' className="single-comic__back">Back to all</Link>
         </div>
     )
 }

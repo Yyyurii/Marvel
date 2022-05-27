@@ -6,6 +6,8 @@ import Spinner from '../spinner/Spinner';
 
 import { useEffect, useState } from 'react';
 
+import { Link } from 'react-router-dom';
+
 const ComicsList = (props) => {
     const [comicsList, setComicsList] = useState([]);
     const [offset, setOffset] = useState(210);
@@ -27,17 +29,17 @@ const ComicsList = (props) => {
     }
 
     function renderComicsList(comicsArr) {
-        const renderComics = comicsArr.map(comics => {
+        const renderComics = comicsArr.map((comics, i) => {
             return (
                 <li 
                     className="comics__item" 
-                    key={comics.id}
+                    key={i}
                     onClick={() => props.onComicSelected(comics.id)}>
-                    <a href="#">
+                    <Link to={`/comics/${comics.id}`}>
                         <img src={comics.thumbnail} alt="ultimate war" className="comics__item-img" />
                         <div className="comics__item-name">{comics.title}</div>
                         <div className="comics__item-price">{comics.price}</div>
-                    </a>
+                    </Link>
                 </li>
             )
         });

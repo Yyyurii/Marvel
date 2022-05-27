@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import ComicsList from "../components/comicsList/ComicsList";
-import SingleComic from "../components/singleComic/SingleComic";
 
 const ComicsPage = () => {
 
@@ -12,10 +11,7 @@ const ComicsPage = () => {
   }
 
   return (
-    <>
       <ComicsList onComicSelected={onComicSelected} />
-      {/* <SingleComic comicId={selectedComic} /> */}
-    </>
   )
 }
 
